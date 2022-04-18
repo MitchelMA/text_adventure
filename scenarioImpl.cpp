@@ -9,38 +9,39 @@ Scenario::Scenario(std::string text, int optionsSize)
 {
     this->text = text;
     this->optionsSize = optionsSize;
-    this->test = (Scenario **)malloc(sizeof(Scenario) * this->optionsSize);
+    this->sceneOptions = (Scenario **)malloc(sizeof(Scenario) * this->optionsSize);
+    this->sceneTexts = (std::string *)malloc(sizeof(std::string) * this->optionsSize);
     for (int i = 0; i < this->optionsSize; i++)
     {
-        this->test[i] = (Scenario *)malloc(sizeof(Scenario));
+        this->sceneOptions[i] = (Scenario *)malloc(sizeof(Scenario));
     }
+}
+
+Scenario::~Scenario()
+{
+    for (int i = 0; i < optionsSize; i++)
+    {
+        free(sceneTexts);
+    }
+    free(sceneOptions);
+    free(this);
 }
 
 std::string Scenario::getOptions(void)
 {
     std::ostringstream os;
-    auto iter = this->options.begin();
-    for (; iter != this->options.end(); ++iter)
+    for (int i = 0; i < optionsSize; i++)
     {
-        os << ">  " << iter->first << ": " << &(iter->second) << "\n";
+        os << "> " << sceneTexts[i] << ": " << sceneOptions[i] << "\n";
     }
     return os.str();
 }
 
-void Scenario::setOptions(std::map<std::string, Scenario> options)
-{
-    this->options = options;
-}
-void Scenario::testSetup(Scenario **through)
+void Scenario::setup(Scenario **through, std::string *optionsTexts)
 {
     for (int i = 0; i < this->optionsSize; i++)
     {
-        this->test[i] = through[i];
-        std::cout << "TestSet: " << through[i] << std::endl;
+        this->sceneOptions[i] = through[i];
+        this->sceneTexts[i] = optionsTexts[i];
     }
-    std::cout << this->test[1] << " Testje" << std::endl;
-}
-void Scenario::testIt(void)
-{
-    std::cout << "It: " << this->test[1] << std::endl;
 }

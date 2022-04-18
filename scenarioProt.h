@@ -7,17 +7,14 @@ struct Scenario
 
 public:
     std::string text = "Lorum Ipsum Dolor Sit Amet.";
-    std::map<std::string, Scenario> options;
-    Scenario **test;
+    Scenario **sceneOptions = nullptr;
+    std::string *sceneTexts = nullptr;
     int optionsSize;
 
     Scenario(std::string text, int optionsSize);
-
-    void setOptions(std::map<std::string, Scenario> options);
+    ~Scenario();
 
     std::string getOptions(void);
 
-    void testSetup(Scenario **through);
-
-    void testIt(void);
+    void setup(Scenario **sceneOptions, std::string *sceneTexts);
 };
