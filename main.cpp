@@ -1,7 +1,4 @@
 #include <iostream>
-#include <string>
-#include <map>
-#include <vector>
 #include "prototypes.hpp"
 
 Scenario *scen_01;
