@@ -5,43 +5,30 @@
 #include <iostream>
 #include <map>
 
-Scenario::Scenario(std::string text, int optionsSize)
+Scenario::Scenario(std::string text)
 {
     this->text = text;
-    this->optionsSize = optionsSize;
-    this->sceneTexts = (std::string *)malloc(sizeof(std::string) * this->optionsSize);
-    this->sceneOptions = (Scenario **)malloc(sizeof(Scenario) * this->optionsSize);
-    for (int i = 0; i < this->optionsSize; i++)
-    {
-        this->sceneOptions[i] = (Scenario *)malloc(sizeof(Scenario));
-    }
 }
 
 std::string Scenario::getOptions(void)
 {
     std::ostringstream os;
-    for (int i = 0; i < optionsSize; i++)
+    auto iter = options.begin();
+    for (; iter != options.end(); ++iter)
     {
-        os << "> " << this->sceneTexts[i] << "\n";
+        os << "> " << iter->first << "\n";
     }
     return os.str();
 }
 
-void Scenario::setup(Scenario **through, std::string *optionsTexts)
+void Scenario::setup(std::map<std::string, Scenario *> options)
 {
-    // this->sceneOptions = through;
-    // this->sceneTexts = optionsTexts;
-    for (int i = 0; i < this->optionsSize; i++)
-    {
-        this->sceneOptions[i] = through[i];
-        this->sceneTexts[i] = optionsTexts[i];
-    }
+    this->options = options;
 }
 void Scenario::testIt(void)
 {
-    for (int i = 0; i < this->optionsSize; i++)
+    for (auto iter = options.begin(); iter != options.end(); ++iter)
     {
-        std::cout << this->sceneOptions[i] << std::endl;
+        std::cout << iter->second << std::endl;
     }
-    std::cout << "Eind" << std::endl;
 }
