@@ -4,19 +4,20 @@
 
 struct Scenario
 {
-
-public:
+    // Display text of the scenario
     std::string text = "Lorum Ipsum Dolor Sit Amet.";
-    // Scenario **sceneOptions;
-    // std::string *sceneTexts;
+    // Options of the scenario
     std::map<std::string, Scenario *> options;
-    // int optionsSize;
 
+    // Scenario constructor
     Scenario(std::string text);
-    // ~Scenario();
+    // Scenario constructor
+    Scenario(std::string text, std::map<std::string, Scenario *> options);
 
+    // Get the options as a string
     std::string getOptions(void);
 
+    // Setup of the options
     void setup(std::map<std::string, Scenario *> options);
     void testIt(void);
 };

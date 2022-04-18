@@ -1,13 +1,17 @@
 #include "scenarioProt.h"
 #include <string>
 #include <sstream>
-#include <cstdio>
 #include <iostream>
 #include <map>
 
 Scenario::Scenario(std::string text)
 {
     this->text = text;
+}
+Scenario::Scenario(std::string text, std::map<std::string, Scenario *> options)
+{
+    this->text = text;
+    this->options = options;
 }
 
 std::string Scenario::getOptions(void)
