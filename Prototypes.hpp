@@ -25,6 +25,9 @@ struct Scenario
     // boolean value: clear the screen towards this path or not
     bool clear = true;
 
+    // linked parent
+    Scenario *parent;
+
     // get and neccesities
     std::map<int, std::string> gets;
     std::map<int, std::string> needs;
