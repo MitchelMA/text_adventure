@@ -90,15 +90,7 @@ void Scenario::info(void)
     auto iter = options.begin();
     for (int i = 0; iter != options.end(); ++iter, ++i)
     {
-        try
-        {
-            gets.at(i);
-            std::cout << iter->first << ": " << gets.at(i) << std::endl;
-        }
-        catch (...)
-        {
-            std::cout << iter->first << std::endl;
-        }
+        std::cout << iter->first << ": {" << (gets[i].empty() ? "..." : gets[i]) << ", " << (needs[i].empty() ? "..." : needs[i]) << "}" << std::endl;
     }
 }
 
@@ -179,38 +171,25 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
     std::string chosen = pair.first;
     if (scene->needs.size() > 0)
     {
-        // try catch to see if the chosen option has a "need"
-        try
+        // check if you need something for this options
+        std::string need = scene->needs[num - 1];
+        if (!need.empty() && !vectorContains(*myInv, need))
         {
-            std::string need = scene->needs.at(num - 1);
-            if (!vectorContains(*myInv, need))
-            {
-                std::cout << "Helaas, je mist een voorwerp: " << need << std::endl;
-                std::cin.get();
-                scene->initScene();
-                return;
-            }
-        }
-        catch (...)
-        {
+            std::cout << "Helaas, je mist een voorwerp: " << need << std::endl;
+            std::cin.get();
+            scene->initScene();
+            return;
         }
     }
     if (scene->gets.size() > 0)
     {
-        // try catch to see if the chosen options has a "get"
-        try
+        // check if the player gets somehting from this option
+        std::string get = scene->gets[num - 1];
+        if (!get.empty() && !vectorContains(*myInv, get))
         {
-            std::string get = scene->gets.at(num - 1);
-            if (!vectorContains(*myInv, get))
-            {
-                addToVector(*myInv, {get});
-                std::cout << "je hebt verkregen: " << get << std::endl;
-                std::cin.get();
-            }
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << e.what() << '\n';
+            addToVector(*myInv, {get});
+            std::cout << "je hebt verkregen: " << get << std::endl;
+            std::cin.get();
         }
     }
     pair.second->initScene();
@@ -218,9 +197,8 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
 
 void testInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num)
 {
-    std::cout << scene << std::endl;
-    std::cout << pair.second << std::endl;
-    std::cout << num << std::endl;
+    std::cout << "Huidig: " << scene << std::endl;
+    std::cout << num << ". " << pair.first << ": " << pair.second << std::endl;
     std::cout << "Dit is een test input handler" << std::endl;
 }
 
