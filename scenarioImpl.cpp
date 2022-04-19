@@ -4,28 +4,53 @@
 std::vector<std::string> *myInv = new std::vector<std::string>();
 
 // vector checking
-
 #pragma region vectorhandling
-void addToVector(std::vector<std::string> &vec, std::vector<std::string> add)
+
+// void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
+// {
+//     // check for doubles
+//     if (vec.size() == 0)
+//     {
+//         for (auto i : add)
+//             vec.push_back(i);
+//         return;
+//     }
+//     for (auto i : vec)
+//     {
+//         for (auto j : add)
+//         {
+//             if (i == j)
+//                 continue;
+//             vec.push_back(j);
+//         }
+//     }
+// }
+
+// recursive add function
+template <typename T, typename A>
+void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
 {
-    // check for doubles
-    if (vec.size() == 0)
-    {
-        for (auto i : add)
-            vec.push_back(i);
+    if (add.size() <= 0)
         return;
-    }
+
+    bool in = false;
     for (auto i : vec)
     {
-        for (auto j : add)
-        {
-            if (i == j)
-                continue;
-            vec.push_back(j);
-        }
+        if (i == add.front())
+            in = true;
     }
+    if (!in)
+        vec.push_back(add.front());
+
+    vectorInverse(add);
+    add.pop_back();
+    vectorInverse(add);
+
+    addToVector(vec, add);
 }
-bool vectorContains(std::vector<std::string> &vec, std::string cont)
+
+template <typename T, typename A>
+bool vectorContains(std::vector<T, A> &vec, T cont)
 {
     for (auto i : vec)
     {
@@ -34,6 +59,24 @@ bool vectorContains(std::vector<std::string> &vec, std::string cont)
     }
     return false;
 }
+
+template <typename T, typename A>
+void vectorInverse(std::vector<T, A> &vec)
+{
+    auto start = vec.begin();
+    auto end = vec.end() - 1;
+    while (start < end)
+    {
+        T tmp;
+        tmp = *start;
+        *start = *end;
+        *end = tmp;
+
+        --end;
+        ++start;
+    }
+}
+
 #pragma endregion
 
 // scenario prototypes
@@ -87,8 +130,7 @@ void Scenario::handleInput()
     // regions for commands like "inventory" etc
     if (lastInput == "inventory")
     {
-        std::cout << "inventory: " << std::endl;
-        std::cout << myInv->size() << std::endl;
+        std::cout << "inventory (" << myInv->size() << "): " << std::endl;
         for (auto i : *myInv)
         {
             std::cout << " " << i << std::endl;

@@ -23,7 +23,6 @@ int main()
 
 void storySetup()
 {
-    // playerInventory = new std::vector<std::string>();
     // initializing the prototypes
     scen_01 = new Scenario("Dit is de Text");
     scen_02 = new Scenario("Dit is scenario 2");
@@ -37,4 +36,6 @@ void storySetup()
     // needs and gets
     scen_01->setGet({{scen_02, "Paspoort"}});
     scen_02->setNeed({{scen_03, "Paspoort"}});
+    scen_02->setGet({{scen_01, "Geld"}});
+    scen_03->setGet({{scen_01, "Paspoort"}});
 }

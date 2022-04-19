@@ -55,8 +55,14 @@ struct Scenario
 
 #pragma region vectorHandling
 
-void addToVector(std::vector<std::string> &vec, std::vector<std::string> add);
-bool vectorContains(std::vector<std::string> &vec, std::string);
+template <typename T, typename A>
+void addToVector(std::vector<T, A> &vec, std::vector<T, A> add);
+
+template <typename T, typename A>
+void vectorInverse(std::vector<T, A> &vec);
+
+template <typename T, typename A>
+bool vectorContains(std::vector<T, A> &vec, T cont);
 
 #pragma endregion
 
