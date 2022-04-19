@@ -16,8 +16,8 @@ int main()
     delete scen_01;
     delete scen_02;
     delete scen_03;
+    delete scen_04;
 
-    // delete playerInventory;
     return 0;
 }
 void storySetup()

@@ -9,6 +9,9 @@
 #include <iostream>
 #include <map>
 
+// extern of the inventory
+extern std::vector<std::string> *myInv;
+
 #pragma region Scenario
 
 struct Scenario
