@@ -6,26 +6,6 @@ std::vector<std::string> *myInv = new std::vector<std::string>();
 // vector checking
 #pragma region vectorhandling
 
-// void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
-// {
-//     // check for doubles
-//     if (vec.size() == 0)
-//     {
-//         for (auto i : add)
-//             vec.push_back(i);
-//         return;
-//     }
-//     for (auto i : vec)
-//     {
-//         for (auto j : add)
-//         {
-//             if (i == j)
-//                 continue;
-//             vec.push_back(j);
-//         }
-//     }
-// }
-
 // recursive add function
 template <typename T, typename A>
 void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
@@ -103,11 +83,22 @@ void Scenario::setup(std::vector<std::pair<std::string, Scenario *>> options, st
     this->options = options;
     this->handlers = handlers;
 }
-void Scenario::testIt(void)
+void Scenario::info(void)
 {
-    for (auto iter = options.begin(); iter != options.end(); ++iter)
+    std::cout << text << std::endl;
+    std::cout << "options:" << std::endl;
+    auto iter = options.begin();
+    for (int i = 0; iter != options.end(); ++iter, ++i)
     {
-        std::cout << iter->first << std::endl;
+        try
+        {
+            gets.at(i);
+            std::cout << iter->first << ": " << gets.at(i) << std::endl;
+        }
+        catch (...)
+        {
+            std::cout << iter->first << std::endl;
+        }
     }
 }
 

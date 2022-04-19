@@ -38,7 +38,7 @@ struct Scenario
 
     // Setup of the options
     void setup(std::vector<std::pair<std::string, Scenario *>> options, std::map<int, void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers);
-    void testIt(void);
+    void info(void);
 
     // setup for get
     void setGet(std::map<int, std::string> setget);
