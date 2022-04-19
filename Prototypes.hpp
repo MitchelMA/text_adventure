@@ -1,6 +1,4 @@
 #pragma once
-#ifndef PROTOTYPES
-#define PROTOTYPES
 
 #include <string>
 #include <vector>
@@ -19,11 +17,13 @@ struct Scenario
     // Display text of the scenario
     std::string text = "Lorum Ipsum Dolor Sit Amet.";
     // Options of the scenario
-    // std::map<std::string, Scenario *> options;
     std::vector<std::pair<std::string, Scenario *>> options;
 
     // last input string
     std::string lastInput;
+
+    // boolean value: clear the screen towards this path or not
+    bool clear = true;
 
     // get and neccesities
     std::map<int, std::string> gets;
@@ -32,6 +32,9 @@ struct Scenario
 
     // Scenario constructor
     Scenario(std::string text);
+
+    // Scenario constructor
+    Scenario(std::string text, bool clear);
 
     // Scenario constructor
     Scenario(std::string text, std::vector<std::pair<std::string, Scenario *>> options);
@@ -78,5 +81,3 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
 void testInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num);
 
 #pragma endregion
-
-#endif

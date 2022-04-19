@@ -1,5 +1,6 @@
 #include <iostream>
 #include "prototypes.hpp"
+#include "quiz/quiz.hpp"
 
 Scenario *scen_01;
 Scenario *scen_02;
@@ -32,7 +33,7 @@ void storySetup()
     scen_01->setup({{"lol", scen_02}, {"lol ja man", scen_03}}, {{0, normInput}, {1, testInput}});
     scen_02->setup({{"Kanus man", scen_03}, {"Nee man", scen_01}}, {{0, normInput}, {1, normInput}});
     scen_03->setup({{"naar 4", scen_04}, {"terug naar 1", scen_01}}, {{0, normInput}, {1, normInput}});
-    scen_04->setup({{"Terug naar 1", scen_01}, {"Test Handler:", nullptr}}, {{0, normInput}, {1, testInput}});
+    scen_04->setup({{"Terug naar 1", scen_01}, {"Test Handler:", nullptr}}, {{0, quizStart}, {1, testInput}});
 
     // needs and gets
     scen_01->setGet({{0, "Paspoort"}});

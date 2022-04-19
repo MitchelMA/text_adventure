@@ -60,6 +60,12 @@ void vectorInverse(std::vector<T, A> &vec)
 Scenario::Scenario(std::string text)
 {
     this->text = text;
+    this->clear = true;
+}
+Scenario::Scenario(std::string text, bool clear)
+{
+    this->text = text;
+    this->clear = clear;
 }
 Scenario::Scenario(std::string text, std::vector<std::pair<std::string, Scenario *>> options)
 {
@@ -96,10 +102,10 @@ void Scenario::info(void)
 
 void Scenario::initScene(void)
 {
-    system("cls");
-    // std::cout << myInv->size() << std::endl;
+    if (clear)
+        system("cls");
     std::cout << text << std::endl;
-    std::cout << getOptions() << std::flush;
+    std::cout << this->getOptions() << std::flush;
     handleInput();
 }
 
