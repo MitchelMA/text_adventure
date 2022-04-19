@@ -33,15 +33,11 @@ void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
     if (add.size() <= 0)
         return;
 
-    bool in = false;
-    for (auto i : vec)
-    {
-        if (i == add.front())
-            in = true;
-    }
+    bool in = vectorContains(vec, add.front());
     if (!in)
         vec.push_back(add.front());
 
+    // pop the front element of the add vector
     vectorInverse(add);
     add.pop_back();
     vectorInverse(add);
@@ -85,7 +81,7 @@ Scenario::Scenario(std::string text)
 {
     this->text = text;
 }
-Scenario::Scenario(std::string text, std::map<std::string, Scenario *> options)
+Scenario::Scenario(std::string text, std::vector<std::pair<std::string, Scenario *>> options)
 {
     this->text = text;
     this->options = options;
@@ -102,7 +98,7 @@ std::string Scenario::getOptions(void)
     return os.str();
 }
 
-void Scenario::setup(std::map<std::string, Scenario *> options, std::map<Scenario *, void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers)
+void Scenario::setup(std::vector<std::pair<std::string, Scenario *>> options, std::map<int, void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers)
 {
     this->options = options;
     this->handlers = handlers;
@@ -154,7 +150,7 @@ void Scenario::handleInput()
     {
         if (i + 1 == inpNum)
         {
-            auto handler = handlers.at(iter->second);
+            auto handler = handlers.at(i);
             handler(this, *iter, inpNum);
             return;
         }
@@ -163,11 +159,11 @@ void Scenario::handleInput()
     initScene();
 }
 
-void Scenario::setGet(std::map<Scenario *, std::string> setget)
+void Scenario::setGet(std::map<int, std::string> setget)
 {
     this->gets = setget;
 }
-void Scenario::setNeed(std::map<Scenario *, std::string> setneed)
+void Scenario::setNeed(std::map<int, std::string> setneed)
 {
     this->needs = setneed;
 }
@@ -195,7 +191,7 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
         // try catch to see if the chosen option has a "need"
         try
         {
-            std::string need = scene->needs.at(pair.second);
+            std::string need = scene->needs.at(num - 1);
             if (!vectorContains(*myInv, need))
             {
                 std::cout << "Helaas, je mist een voorwerp: " << need << std::endl;
@@ -213,10 +209,13 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
         // try catch to see if the chosen options has a "get"
         try
         {
-            std::string get = scene->gets.at(pair.second);
-            addToVector(*myInv, {get});
-            std::cout << "je hebt verkregen: " << get << std::endl;
-            std::cin.get();
+            std::string get = scene->gets.at(num - 1);
+            if (!vectorContains(*myInv, get))
+            {
+                addToVector(*myInv, {get});
+                std::cout << "je hebt verkregen: " << get << std::endl;
+                std::cin.get();
+            }
         }
         catch (const std::exception &e)
         {
@@ -224,6 +223,14 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
         }
     }
     pair.second->initScene();
+}
+
+void testInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num)
+{
+    std::cout << scene << std::endl;
+    std::cout << pair.second << std::endl;
+    std::cout << num << std::endl;
+    std::cout << "Dit is een test input handler" << std::endl;
 }
 
 #pragma endregion
