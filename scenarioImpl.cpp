@@ -254,14 +254,13 @@ void testRem(Scenario *scene, std::pair<const std::string, Scenario *> pair, int
         std::cout << "Verkeerd wachtwoord!" << std::endl;
         scene->removeOption(num - 1);
         std::cin.get();
+        scene->initScene();
+        return;
     }
-    else
-    {
-        std::cout << "Dat was het goede wachtwoord" << std::endl;
-        std::cin.get();
-        pair.second->initScene();
-    }
-    scene->initScene();
+    // else
+    std::cout << "Dat was het goede wachtwoord" << std::endl;
+    std::cin.get();
+    pair.second->initScene();
 }
 
 #pragma endregion
