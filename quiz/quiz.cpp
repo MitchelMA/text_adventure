@@ -1,4 +1,5 @@
 #include "quiz.hpp"
+#include <iostream>
 
 // the questionspool
 std::vector<Scenario *> questionPool;

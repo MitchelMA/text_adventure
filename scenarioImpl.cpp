@@ -1,4 +1,6 @@
 #include "prototypes.hpp"
+#include <iostream>
+#include <sstream>
 
 // playerInventory
 std::vector<std::string> *myInv = new std::vector<std::string>();
@@ -6,7 +8,6 @@ std::vector<std::string> *myInv = new std::vector<std::string>();
 // vector checking
 #pragma region vectorhandling
 
-// recursive add function
 template <typename T, typename A>
 void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
 {
@@ -24,18 +25,7 @@ void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
 }
 
 template <typename T, typename A>
-bool vectorContains(std::vector<T, A> &vec, T cont)
-{
-    for (auto i : vec)
-    {
-        if (i == cont)
-            return true;
-    }
-    return false;
-}
-
-template <typename T, typename A>
-void vectorInverse(std::vector<T, A> &vec)
+void vectorInvert(std::vector<T, A> &vec)
 {
     auto start = vec.begin();
     auto end = vec.end() - 1;
@@ -51,10 +41,21 @@ void vectorInverse(std::vector<T, A> &vec)
     }
 }
 
+template <typename T, typename A>
+bool vectorContains(const std::vector<T, A> &vec, T cont)
+{
+    for (auto i : vec)
+    {
+        if (i == cont)
+            return true;
+    }
+    return false;
+}
+
 #pragma endregion
 
 // scenario prototypes
-#pragma region sceanrios
+#pragma region scenario
 Scenario::Scenario(std::string text)
 {
     this->text = text;
@@ -64,11 +65,6 @@ Scenario::Scenario(std::string text, bool clear)
 {
     this->text = text;
     this->clear = clear;
-}
-Scenario::Scenario(std::string text, std::vector<std::pair<std::string, Scenario *>> options)
-{
-    this->text = text;
-    this->options = options;
 }
 
 std::string Scenario::getOptions(void)
@@ -89,12 +85,13 @@ void Scenario::setup(std::vector<std::pair<std::string, Scenario *>> options, st
 }
 void Scenario::info(void)
 {
+    std::cout << this << std::endl;
     std::cout << text << std::endl;
     std::cout << "options:" << std::endl;
     auto iter = options.begin();
     for (int i = 0; iter != options.end(); ++iter, ++i)
     {
-        std::cout << iter->first << ": {" << (gets[i].empty() ? "..." : gets[i]) << ", " << (needs[i].empty() ? "..." : needs[i]) << "}" << std::endl;
+        std::cout << iter->first << ": {" << (gets[i].empty() ? "..." : gets[i]) << ", " << (needs[i].empty() ? "..." : needs[i]) << "}: " << iter->second << std::endl;
     }
 }
 
