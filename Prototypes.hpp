@@ -31,7 +31,7 @@ struct Scenario
     // get and neccesities
     std::map<int, std::string> gets;
     std::map<int, std::string> needs;
-    std::map<int, void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers;
+    std::vector<void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers;
 
     // Scenario constructor
     Scenario(std::string text);
@@ -46,7 +46,7 @@ struct Scenario
     std::string getOptions(void);
 
     // Setup of the options
-    void setup(std::vector<std::pair<std::string, Scenario *>> options, std::map<int, void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers);
+    void setup(std::vector<std::pair<std::string, Scenario *>> options, std::vector<void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers);
     void info(void);
 
     // setup for get
@@ -59,6 +59,8 @@ struct Scenario
     void initScene(void);
 
     void handleInput();
+
+    bool removeOption(int optionIndex);
 };
 
 #pragma endregion

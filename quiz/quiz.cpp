@@ -12,11 +12,14 @@ void quizStart(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
     questionPool.push_back(q_01);
     questionPool.push_back(q_02);
 
+    std::cout << q_01 << std::endl;
+    std::cout << q_02 << std::endl;
+
     q_01->parent = scene;
     q_02->parent = scene;
 
-    q_01->setup({{"Antwoord 1", scene}, {"Antwoord 2", q_02}}, {{0, quizEnd}, {1, quizHandle}});
-    q_02->setup({{"Antwoord 1", pair.second}}, {{0, quizEnd}});
+    q_01->setup({{"Antwoord 1", scene}, {"Antwoord 2", q_02}}, {quizEnd, quizHandle});
+    q_02->setup({{"Antwoord 1", pair.second}}, {quizEnd});
     q_01->initScene();
 }
 

@@ -84,7 +84,7 @@ std::string Scenario::getOptions(void)
     return os.str();
 }
 
-void Scenario::setup(std::vector<std::pair<std::string, Scenario *>> options, std::map<int, void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers)
+void Scenario::setup(std::vector<std::pair<std::string, Scenario *>> options, std::vector<void (*)(Scenario *, std::pair<const std::string, Scenario *>, int)> handlers)
 {
     this->options = options;
     this->handlers = handlers;
@@ -155,6 +155,13 @@ void Scenario::setGet(std::map<int, std::string> setget)
 void Scenario::setNeed(std::map<int, std::string> setneed)
 {
     this->needs = setneed;
+}
+
+bool Scenario::removeOption(int optionIndex)
+{
+    std::cout << "Removing index: " << optionIndex << std::endl;
+    // first remove the handler
+    handlers.erase(handlers.begin() + optionIndex);
 }
 
 #pragma endregion
