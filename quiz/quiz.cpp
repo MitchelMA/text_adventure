@@ -12,9 +12,6 @@ void quizStart(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
     questionPool.push_back(q_01);
     questionPool.push_back(q_02);
 
-    std::cout << q_01 << std::endl;
-    std::cout << q_02 << std::endl;
-
     q_01->parent = scene;
     q_02->parent = scene;
 

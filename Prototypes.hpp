@@ -60,7 +60,7 @@ struct Scenario
 
     void handleInput();
 
-    bool removeOption(int optionIndex);
+    void removeOption(unsigned int optionIndex);
 };
 
 #pragma endregion
@@ -84,5 +84,6 @@ void clearInputBuffer(void);
 int charToNum(char ch);
 void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num);
 void testInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num);
+void testRem(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num);
 
 #pragma endregion

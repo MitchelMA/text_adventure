@@ -18,9 +18,7 @@ void addToVector(std::vector<T, A> &vec, std::vector<T, A> add)
         vec.push_back(add.front());
 
     // pop the front element of the add vector
-    vectorInverse(add);
-    add.pop_back();
-    vectorInverse(add);
+    add.erase(add.begin());
 
     addToVector(vec, add);
 }
@@ -157,11 +155,43 @@ void Scenario::setNeed(std::map<int, std::string> setneed)
     this->needs = setneed;
 }
 
-bool Scenario::removeOption(int optionIndex)
+void Scenario::removeOption(unsigned int optionIndex)
 {
-    std::cout << "Removing index: " << optionIndex << std::endl;
-    // first remove the handler
+    // check if optionIndex is not out of range
+    if (optionIndex >= options.size())
+        return;
+
+    // erase the display option
+    options.erase(options.begin() + optionIndex);
+
+    // erase the corresponding handler
     handlers.erase(handlers.begin() + optionIndex);
+
+    // Erasing the get ---------------------------
+    for (size_t i = 0; i < gets.size(); ++i)
+    {
+        if (i >= optionIndex && i < gets.size() - 1)
+        {
+            // replace the current with the next
+            gets.at(i).assign(gets[i + 1]);
+        }
+    }
+    // erase the last element of the gets
+    gets.erase(gets.size() - 1);
+    // -------------------------------------------
+
+    // Erasing the need --------------------------
+    for (size_t i = 0; i < needs.size(); ++i)
+    {
+        if (i >= optionIndex && i < needs.size() - 1)
+        {
+            // replace the current with the next
+            needs.at(i).assign(needs[i + 1]);
+        }
+    }
+    // erase the last element of the needs
+    needs.erase(needs.size() - 1);
+    // -------------------------------------------
 }
 
 #pragma endregion
@@ -213,6 +243,25 @@ void testInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
     std::cout << "Huidig: " << scene << std::endl;
     std::cout << num << ". " << pair.first << ": " << pair.second << std::endl;
     std::cout << "Dit is een test input handler" << std::endl;
+}
+
+void testRem(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num)
+{
+    std::cout << "Voer wachtwoord in: " << std::endl;
+    std::getline(std::cin, scene->lastInput);
+    if (scene->lastInput != "1234")
+    {
+        std::cout << "Verkeerd wachtwoord!" << std::endl;
+        scene->removeOption(num - 1);
+        std::cin.get();
+    }
+    else
+    {
+        std::cout << "Dat was het goede wachtwoord" << std::endl;
+        std::cin.get();
+        pair.second->initScene();
+    }
+    scene->initScene();
 }
 
 #pragma endregion
