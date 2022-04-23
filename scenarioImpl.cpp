@@ -1,6 +1,7 @@
-#include "prototypes.hpp"
 #include <iostream>
 #include <sstream>
+#include "prototypes.hpp"
+#include "story/story.hpp"
 
 // playerInventory
 std::vector<std::string> *myInv = new std::vector<std::string>();
@@ -233,6 +234,46 @@ void normInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, i
         }
     }
     pair.second->initScene();
+}
+
+void gameEnd(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num)
+{
+    // restart
+    if (num == 1)
+    {
+        delete scen_01;
+        delete scen_02;
+        delete scen_03;
+        delete scen_04;
+        delete scen_05;
+        delete scen_06;
+        delete scen_07;
+        delete scen_08;
+        delete scen_09;
+        delete scen_10;
+        delete scen_11;
+        delete scen_12;
+        delete scen_13;
+        delete scen_14;
+        delete scen_15;
+        delete scen_16;
+        delete scen_17;
+        delete scen_18;
+        delete scen_19;
+        delete scen_20;
+        delete scen_21;
+        myInv->clear();
+
+        storySetup();
+        scen_01->initScene();
+    }
+    // exit
+    else
+    {
+        std::cout << "bedankt voor het spelen!" << std::endl;
+        std::cin.get();
+        exit(0);
+    }
 }
 
 void testInput(Scenario *scene, std::pair<const std::string, Scenario *> pair, int num)
