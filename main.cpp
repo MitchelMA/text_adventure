@@ -1,7 +1,6 @@
 #include <iostream>
 #include <Windows.h>
 #include "prototypes.hpp"
-#include "quiz/quiz.hpp"
 #include "story/story.hpp"
 
 int main()

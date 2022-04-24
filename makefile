@@ -6,6 +6,7 @@ main: main.o implements.o quiz.o story.o
 	del main.o
 	del scenarioImpl.o
 	del quiz.o
+	del story.o
 
 main.o: main.cpp scenarioImpl.cpp quiz/quiz.cpp
 	$(COMP) $(FLAGS) -c main.cpp scenarioImpl.cpp quiz/quiz.cpp story/story.cpp
